@@ -103,9 +103,10 @@ public class DrawingView extends View {
     }
 
     public void setColor(String newColor){
-        //set color
         invalidate();
+        //Parse the color string, and return the corresponding color-int.
         paintColor = Color.parseColor(newColor);
+        //set color
         drawPaint.setColor(paintColor);
     }
 

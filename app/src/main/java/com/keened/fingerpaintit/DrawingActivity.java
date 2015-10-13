@@ -7,14 +7,17 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import java.util.Random;
 import java.util.UUID;
 
+/**
+ * Created by Ed on 10/9/2015.
+ */
 public class DrawingActivity extends AppCompatActivity implements View.OnClickListener {
 
     // This represents the instance of the custom View that we added to the layout
@@ -163,6 +166,8 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
                     //save drawing
                     drawView.setDrawingCacheEnabled(true);
                     String imgSaved = MediaStore.Images.Media.insertImage(
+                            //When the drawing cache is enabled, the next call
+                            // to getDrawingCache() or buildDrawingCache() will draw the view in a bitmap.
                             getContentResolver(), drawView.getDrawingCache(),
                             UUID.randomUUID().toString()+".png", "drawing");
 
@@ -170,6 +175,7 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
                         Toast savedToast = Toast.makeText(getApplicationContext(),
                                 "Drawing saved to Gallery!", Toast.LENGTH_SHORT);
                         savedToast.show();
+                        //empty the cache for next time
                         drawView.destroyDrawingCache();
                     }
                     else{
@@ -205,27 +211,5 @@ public class DrawingActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    /**
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-    */
-}
+} //end class
